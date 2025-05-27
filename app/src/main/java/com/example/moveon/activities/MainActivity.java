@@ -1,5 +1,6 @@
-package com.example.moveon;
+package com.example.moveon.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -8,9 +9,11 @@ import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.moveon.R;
+import com.example.moveon.activities.TreinosActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,15 +39,15 @@ public class MainActivity extends AppCompatActivity {
         btnStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Animação de feedback ao toque
                 Animation clickAnim = new AlphaAnimation(1.0f, 0.5f);
                 clickAnim.setDuration(150);
                 clickAnim.setRepeatMode(Animation.REVERSE);
                 clickAnim.setRepeatCount(1);
                 btnStart.startAnimation(clickAnim);
 
-                Toast.makeText(MainActivity.this, "Iniciar clicado!", Toast.LENGTH_SHORT).show();
-                // startActivity(new Intent(MainActivity.this, PerfilActivity.class));
+                // Redireciona para TreinosActivity
+                Intent intent = new Intent(MainActivity.this, TreinosActivity.class);
+                startActivity(intent);
             }
         });
     }

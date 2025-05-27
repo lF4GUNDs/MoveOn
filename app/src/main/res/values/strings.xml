@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">MoveOn</string>
     <string name="fundo">Fundo</string>
+
+    <string name="treino_imagem">Imagem do treino</string>
+
 </resources>

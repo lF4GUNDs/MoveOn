@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.moveon">
 
     <application
         android:allowBackup="true"
@@ -12,21 +13,20 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoveOn"
         tools:targetApi="31">
-        <activity
-            android:name=".TreinosActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PerfilActivity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
+
+        <!-- Atividades do aplicativo -->
+        <activity android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
 
+        <activity android:name=".activities.TreinosActivity" android:exported="false" />
+        <activity android:name=".activities.AdicionarTreinoActivity" android:exported="false" />
+        <activity android:name=".activities.AnotacoesActivity" android:exported="false" />
+        <activity android:name=".activities.NovaAnotacaoActivity" android:exported="false" />
+
+    </application>
 </manifest>

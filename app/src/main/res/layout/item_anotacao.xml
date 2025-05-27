@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="6dp"
+    app:cardBackgroundColor="#2C2E30">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Título da anotação -->
+        <TextView
+            android:id="@+id/tvTituloAnotacao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Título da anotação"
+            android:textColor="@android:color/white"
+            android:textStyle="bold"
+            android:textSize="16sp" />
+
+        <!-- Conteúdo da anotação -->
+        <TextView
+            android:id="@+id/tvConteudoAnotacao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Conteúdo resumido da anotação aqui..."
+            android:textColor="#CCCCCC"
+            android:textSize="14sp"
+            android:layout_marginTop="8dp" />
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
