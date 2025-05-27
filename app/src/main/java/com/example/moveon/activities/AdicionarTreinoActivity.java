@@ -26,6 +26,7 @@ public class AdicionarTreinoActivity extends AppCompatActivity {
     int[] imagens = {
             R.drawable.ic_perna,
             R.drawable.ic_braco,
+            R.drawable.ic_costas,
             R.drawable.ic_peito
     };
 

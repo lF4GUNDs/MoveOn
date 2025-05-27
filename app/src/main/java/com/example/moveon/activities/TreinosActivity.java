@@ -72,6 +72,7 @@ public class TreinosActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_ADICIONAR_TREINO);
         });
 
+
         // Clique no calendário (pode ser customizado)
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             // TODO: Lógica futura para treinos por data

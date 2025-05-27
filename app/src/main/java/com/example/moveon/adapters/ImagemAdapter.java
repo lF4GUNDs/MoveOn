@@ -13,9 +13,9 @@ import com.example.moveon.R;
 
 public class ImagemAdapter extends RecyclerView.Adapter<ImagemAdapter.ImagemViewHolder> {
 
-    private int[] imagens;
-    private Context context;
-    private OnImagemClickListener listener;
+    private final Context context;
+    private final int[] imagens;
+    private final OnImagemClickListener listener;
 
     public interface OnImagemClickListener {
         void onImagemClick(int resId);
@@ -30,15 +30,14 @@ public class ImagemAdapter extends RecyclerView.Adapter<ImagemAdapter.ImagemView
     @NonNull
     @Override
     public ImagemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.item_treino, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.item_imagem, parent, false);
         return new ImagemViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ImagemViewHolder holder, int position) {
-        int img = imagens[position];
-        holder.imageView.setImageResource(img);
-        holder.imageView.setOnClickListener(v -> listener.onImagemClick(img));
+        holder.imagem.setImageResource(imagens[position]);
+        holder.itemView.setOnClickListener(v -> listener.onImagemClick(imagens[position]));
     }
 
     @Override
@@ -46,12 +45,12 @@ public class ImagemAdapter extends RecyclerView.Adapter<ImagemAdapter.ImagemView
         return imagens.length;
     }
 
-    public static class ImagemViewHolder extends RecyclerView.ViewHolder {
-        ImageView imageView;
+    static class ImagemViewHolder extends RecyclerView.ViewHolder {
+        ImageView imagem;
 
         public ImagemViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageView = itemView.findViewById(R.id.imageButton_Historico);
+            imagem = itemView.findViewById(R.id.imagemExemplo); // <== Certifique-se que esse ID exista no layout
         }
     }
 }
