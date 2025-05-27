@@ -6,52 +6,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#222426"
-    android:padding="20dp">
+    android:padding="20dp"
+    tools:context=".activities.NovaAnotacaoActivity">
 
     <!-- Campo Título -->
 
     <!-- Campo Conteúdo -->
-    <EditText
-        android:id="@+id/editTitulo"
-        android:layout_width="340dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="44dp"
-        android:backgroundTint="#84BF04"
-        android:hint="Título"
-        android:textColor="@android:color/white"
-        android:textColorHint="#AAAAAA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Botão Salvar -->
 
     <EditText
         android:id="@+id/editConteudo"
-        android:layout_width="340dp"
-        android:layout_height="500dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="321dp"
+        android:layout_height="0dp"
+        android:layout_marginEnd="22dp"
+        android:layout_marginBottom="17dp"
         android:backgroundTint="#84BF04"
         android:gravity="top"
         android:hint="Digite sua anotação..."
         android:inputType="textMultiLine"
+        android:maxLines="20"
+        android:minLines="10"
+        android:overScrollMode="always"
         android:textColor="@android:color/white"
         android:textColorHint="#AAAAAA"
-        app:layout_constraintBottom_toTopOf="@id/btnSalvar"
+        app:layout_constraintBottom_toTopOf="@+id/btnSalvar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTitulo" />
+        app:layout_constraintTop_toBottomOf="@+id/editTitulo" />
 
-    <!-- Botão Salvar -->
+    <EditText
+        android:id="@+id/editTitulo"
+        android:layout_width="320dp"
+        android:layout_height="71dp"
+        android:layout_marginTop="118dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="44dp"
+        android:backgroundTint="#84BF04"
+        android:hint="Título"
+        android:inputType="text"
+        android:textColor="@android:color/white"
+        android:textColorHint="#AAAAAA"
+        app:layout_constraintBottom_toTopOf="@+id/editConteudo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/btnSalvar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="132dp"
+        android:backgroundTint="#84BF04"
         android:text="Salvar"
         android:textColor="@android:color/white"
-        android:backgroundTint="#84BF04"
-        app:layout_constraintTop_toBottomOf="@id/editConteudo"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/editConteudo"
+        app:layout_constraintStart_toStartOf="@+id/editConteudo"
+        app:layout_constraintTop_toBottomOf="@+id/editConteudo" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

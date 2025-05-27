@@ -31,9 +31,8 @@ public class AnotacoesActivity extends AppCompatActivity {
         btnNovaAnotacao = findViewById(R.id.btnNovaAnotacao);
 
         dbHelper = new AnotacoesDBHelper(this);
-        ArrayList<Anotacao> lista = dbHelper.getTodasAnotacoes();
+        adapter = new AnotacaoAdapter(dbHelper.getTodasAnotacoes(), this);
 
-        adapter = new AnotacaoAdapter(lista, this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
 
@@ -46,6 +45,11 @@ public class AnotacoesActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        adapter.atualizarLista(dbHelper.getTodasAnotacoes());
+    }
+
+    public void excluirAnotacao(int id) {
+        dbHelper.excluirAnotacao(id);
         adapter.atualizarLista(dbHelper.getTodasAnotacoes());
     }
 }

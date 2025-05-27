@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 import com.example.moveon.models.Anotacao;
+
 import java.util.ArrayList;
 
 public class AnotacoesDBHelper extends SQLiteOpenHelper {
@@ -28,14 +30,17 @@ public class AnotacoesDBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // Criar nova anotação
     public void salvarAnotacao(String titulo, String conteudo) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("titulo", titulo);
         values.put("conteudo", conteudo);
         db.insert("anotacoes", null, values);
+        db.close();
     }
 
+    // Listar todas as anotações
     public ArrayList<Anotacao> getTodasAnotacoes() {
         ArrayList<Anotacao> lista = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
@@ -47,6 +52,39 @@ public class AnotacoesDBHelper extends SQLiteOpenHelper {
             lista.add(new Anotacao(id, titulo, conteudo));
         }
         cursor.close();
+        db.close();
         return lista;
+    }
+
+    // Buscar anotação por ID
+    public Anotacao getAnotacaoPorId(int id) {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.rawQuery("SELECT * FROM anotacoes WHERE id = ?", new String[]{String.valueOf(id)});
+        Anotacao anotacao = null;
+        if (cursor.moveToFirst()) {
+            String titulo = cursor.getString(1);
+            String conteudo = cursor.getString(2);
+            anotacao = new Anotacao(id, titulo, conteudo);
+        }
+        cursor.close();
+        db.close();
+        return anotacao;
+    }
+
+    // Atualizar anotação existente
+    public void atualizarAnotacao(int id, String titulo, String conteudo) {
+        SQLiteDatabase db = getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("titulo", titulo);
+        values.put("conteudo", conteudo);
+        db.update("anotacoes", values, "id = ?", new String[]{String.valueOf(id)});
+        db.close();
+    }
+
+    // Excluir anotação
+    public void excluirAnotacao(int id) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete("anotacoes", "id = ?", new String[]{String.valueOf(id)});
+        db.close();
     }
 }

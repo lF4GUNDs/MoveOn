@@ -1,4 +1,4 @@
-package com.example.moveon;
+package com.example.moveon.models;
 
 public class TreinoSalvo {
     private String nome;

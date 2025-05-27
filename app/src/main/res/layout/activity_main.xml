@@ -39,9 +39,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="120dp"
-        android:layout_marginTop="225dp"
-        android:layout_marginEnd="109dp"
+        android:layout_marginStart="119dp"
+        android:layout_marginTop="303dp"
+        android:layout_marginEnd="110dp"
         android:rotationY="0"
         android:text="é você contra você"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -50,16 +50,15 @@
         android:textSize="20sp" />
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="match_parent"
-        android:layout_height="314dp"
+        android:id="@+id/logoMarca"
+        android:layout_width="wrap_content"
+        android:layout_height="471dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="0dp"
-        android:src="@drawable/moveon"
-        />
+        android:layout_marginStart="-17dp"
+        android:layout_marginTop="-15dp"
+        android:layout_marginEnd="-8dp"
+        android:src="@drawable/moveon" />
 
 </RelativeLayout>

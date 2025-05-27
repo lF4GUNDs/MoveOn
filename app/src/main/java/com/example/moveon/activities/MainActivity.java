@@ -45,8 +45,8 @@ public class MainActivity extends AppCompatActivity {
                 clickAnim.setRepeatCount(1);
                 btnStart.startAnimation(clickAnim);
 
-                // Redireciona para TreinosActivity
-                Intent intent = new Intent(MainActivity.this, TreinosActivity.class);
+                // Redireciona
+                Intent intent = new Intent(MainActivity.this, PerfisActivity.class);
                 startActivity(intent);
             }
         });

@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.CalendarView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,12 +29,30 @@ public class TreinosActivity extends AppCompatActivity {
     private CalendarView calendarView;
     private FloatingActionButton btnAdicionarTreino;
 
+    private ImageView imgPerfilTopo;
+    private TextView txtNomePerfil;
+
     private static final int REQUEST_ADICIONAR_TREINO = 1001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_treinos);
+
+        // Inicializações de componentes de perfil
+        imgPerfilTopo = findViewById(R.id.imgPerfilTopo);
+        txtNomePerfil = findViewById(R.id.txtNomePerfil);
+
+        // Recuperar dados do perfil via Intent
+        String nome = getIntent().getStringExtra("nomePerfil");
+        int imagemRes = getIntent().getIntExtra("imgPerfil", R.drawable.ic_user);
+
+        if (nome == null || nome.isEmpty()) {
+            nome = "Usuário";
+        }
+
+        txtNomePerfil.setText("Olá, " + nome);
+        imgPerfilTopo.setImageResource(imagemRes);
 
         // Inicializações de componentes
         recyclerTreinos = findViewById(R.id.recyclerTreinos);
@@ -72,8 +92,7 @@ public class TreinosActivity extends AppCompatActivity {
             startActivityForResult(intent, REQUEST_ADICIONAR_TREINO);
         });
 
-
-        // Clique no calendário (pode ser customizado)
+        // Clique no calendário
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             // TODO: Lógica futura para treinos por data
         });

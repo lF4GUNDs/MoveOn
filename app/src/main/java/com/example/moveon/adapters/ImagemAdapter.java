@@ -50,7 +50,7 @@ public class ImagemAdapter extends RecyclerView.Adapter<ImagemAdapter.ImagemView
 
         public ImagemViewHolder(@NonNull View itemView) {
             super(itemView);
-            imagem = itemView.findViewById(R.id.imagemExemplo); // <== Certifique-se que esse ID exista no layout
+            imagem = itemView.findViewById(R.id.imgItem); // ID corrigido para bater com o layout
         }
     }
 }

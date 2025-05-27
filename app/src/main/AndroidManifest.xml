@@ -14,19 +14,41 @@
         android:theme="@style/Theme.MoveOn"
         tools:targetApi="31">
 
-        <!-- Atividades do aplicativo -->
-        <activity android:name=".activities.MainActivity"
-            android:exported="true">
+        <!-- Tela inicial -->
+        <activity
+            android:name=".activities.MainActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".activities.TreinosActivity" android:exported="false" />
-        <activity android:name=".activities.AdicionarTreinoActivity" android:exported="false" />
-        <activity android:name=".activities.AnotacoesActivity" android:exported="false" />
-        <activity android:name=".activities.NovaAnotacaoActivity" android:exported="false" />
+        <!-- Demais activities -->
+        <activity android:name=".activities.PerfisActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activities.CadastroPerfilActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activities.TreinosActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activities.AdicionarTreinoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activities.AnotacoesActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+
+        <activity android:name=".activities.NovaAnotacaoActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
 
     </application>
 </manifest>
