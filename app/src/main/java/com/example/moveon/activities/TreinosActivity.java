@@ -28,7 +28,6 @@ public class TreinosActivity extends AppCompatActivity {
 
     private ImageButton btnAnotacoes, btnHistorico;
     private CalendarView calendarView;
-    private FloatingActionButton btnAdicionarTreino;
 
     private ImageView imgPerfilTopo;
     private TextView txtNomePerfil;
@@ -54,7 +53,6 @@ public class TreinosActivity extends AppCompatActivity {
         btnAnotacoes = findViewById(R.id.imageButton_Historico);
         btnHistorico = findViewById(R.id.imageButton_Historico2);
         calendarView = findViewById(R.id.calendarView);
-        btnAdicionarTreino = findViewById(R.id.btnAdicionarTreino);
 
         // Lista de treinos
         listaTreinos = new ArrayList<>();
@@ -106,11 +104,6 @@ public class TreinosActivity extends AppCompatActivity {
 
         btnHistorico.setOnClickListener(v -> {
             // TODO: Implementar tela de histórico
-        });
-
-        btnAdicionarTreino.setOnClickListener(v -> {
-            Intent intent = new Intent(this, AdicionarExercicioActivity.class);
-            startActivityForResult(intent, REQUEST_ADICIONAR_TREINO);
         });
 
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {

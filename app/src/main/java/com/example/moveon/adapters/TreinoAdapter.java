@@ -51,23 +51,6 @@ public class TreinoAdapter extends RecyclerView.Adapter<TreinoAdapter.TreinoView
             context.startActivity(intent);
         });
 
-        // Botão de excluir
-        holder.btnExcluir.setOnClickListener(v -> {
-            new AlertDialog.Builder(context)
-                    .setTitle("Remover treino")
-                    .setMessage("Deseja realmente remover este treino?")
-                    .setPositiveButton("Sim", (dialog, which) -> {
-                        int pos = holder.getAdapterPosition();
-                        if (pos != RecyclerView.NO_POSITION) {
-                            listaTreinos.remove(pos);
-                            notifyItemRemoved(pos);
-                            notifyItemRangeChanged(pos, listaTreinos.size());
-                            Toast.makeText(context, "Treino removido", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .setNegativeButton("Cancelar", null)
-                    .show();
-        });
     }
 
     @Override
@@ -84,7 +67,6 @@ public class TreinoAdapter extends RecyclerView.Adapter<TreinoAdapter.TreinoView
             super(itemView);
             imagemTreino = itemView.findViewById(R.id.imgTreino);
             nomeTreino = itemView.findViewById(R.id.txtNomeTreino);
-            btnExcluir = itemView.findViewById(R.id.btnExcluir);
         }
     }
 }
