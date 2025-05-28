@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -9,56 +10,60 @@
         android:id="@+id/bgimage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
         android:contentDescription="Fundo"
         android:scaleType="centerCrop"
-        android:src="@drawable/bg_inicio" />
+        android:src="@drawable/bg_inicio"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/btnStart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="121dp"
         android:layout_marginEnd="121dp"
         android:layout_marginBottom="123dp"
         android:background="@android:color/transparent"
         android:text="INICIAR"
         android:textColor="#FFFFFF"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/id_iniText"
         android:layout_width="182dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_marginStart="119dp"
         android:layout_marginTop="303dp"
         android:layout_marginEnd="110dp"
+        android:layout_marginBottom="401dp"
         android:rotationY="0"
-        android:text="é você contra você"
+        android:text="É você contra você"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#edf6f9"
         android:textColorLink="@color/white"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/logoMarca"
         android:layout_width="wrap_content"
         android:layout_height="471dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
         android:layout_marginStart="-17dp"
-        android:layout_marginTop="-15dp"
-        android:layout_marginEnd="-8dp"
-        android:src="@drawable/moveon" />
+        android:layout_marginTop="-16dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="275dp"
+        android:src="@drawable/moveon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

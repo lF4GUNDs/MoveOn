@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -18,9 +17,9 @@
         android:inputType="textPersonName"
         android:textColor="@android:color/white"
         android:textColorHint="#AAAAAA"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Séries -->
     <EditText
@@ -33,9 +32,9 @@
         android:inputType="number"
         android:textColor="@android:color/white"
         android:textColorHint="#AAAAAA"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editNome"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editNome" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Repetições -->
     <EditText
@@ -48,35 +47,24 @@
         android:inputType="number"
         android:textColor="@android:color/white"
         android:textColorHint="#AAAAAA"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editSeries"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editSeries" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <!-- Imagem selecionada -->
-    <ImageView
-        android:id="@+id/imagemSelecionada"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="16dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_perna"
+    <!-- Peso -->
+    <EditText
+        android:id="@+id/editPeso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#84BF04"
+        android:hint="Peso (kg)"
+        android:inputType="numberDecimal"
+        android:textColor="@android:color/white"
+        android:textColorHint="#AAAAAA"
         app:layout_constraintTop_toBottomOf="@id/editRepeticoes"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:contentDescription="Imagem selecionada" />
-
-    <!-- Galeria horizontal -->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerImagens"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="16dp"
-        android:clipToPadding="false"
-        android:paddingStart="4dp"
-        android:paddingEnd="4dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imagemSelecionada" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Botão salvar -->
     <Button
@@ -84,13 +72,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:layout_marginBottom="120dp"
-        android:backgroundTint="#84BF04"
         android:text="Salvar"
+        android:backgroundTint="#84BF04"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editPeso"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/recyclerImagens" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

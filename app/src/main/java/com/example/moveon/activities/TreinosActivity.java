@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moveon.R;
 import com.example.moveon.adapters.TreinoAdapter;
+import com.example.moveon.models.Exercicio;
 import com.example.moveon.models.Treino;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -39,66 +40,84 @@ public class TreinosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_treinos);
 
-        // Inicializações de componentes de perfil
+        // Inicialização do perfil
         imgPerfilTopo = findViewById(R.id.imgPerfilTopo);
         txtNomePerfil = findViewById(R.id.txtNomePerfil);
 
-        // Recuperar dados do perfil via Intent
         String nome = getIntent().getStringExtra("nomePerfil");
         int imagemRes = getIntent().getIntExtra("imgPerfil", R.drawable.ic_user);
-
-        if (nome == null || nome.isEmpty()) {
-            nome = "Usuário";
-        }
-
-        txtNomePerfil.setText("Olá, " + nome);
+        txtNomePerfil.setText("Olá, " + (nome != null ? nome : "Usuário"));
         imgPerfilTopo.setImageResource(imagemRes);
 
-        // Inicializações de componentes
+        // Componentes principais
         recyclerTreinos = findViewById(R.id.recyclerTreinos);
         btnAnotacoes = findViewById(R.id.imageButton_Historico);
         btnHistorico = findViewById(R.id.imageButton_Historico2);
         calendarView = findViewById(R.id.calendarView);
         btnAdicionarTreino = findViewById(R.id.btnAdicionarTreino);
 
-        // Inicializar lista
+        // Lista de treinos
         listaTreinos = new ArrayList<>();
-        listaTreinos.add(new Treino("Peito", R.drawable.ic_peito));
-        listaTreinos.add(new Treino("Costas", R.drawable.ic_costas));
-        listaTreinos.add(new Treino("Perna", R.drawable.ic_perna));
-        listaTreinos.add(new Treino("Braço", R.drawable.ic_braco));
 
-        // Configurar RecyclerView
+        // PEITO
+        ArrayList<Exercicio> exerciciosPeito = new ArrayList<>();
+        exerciciosPeito.add(new Exercicio("Supino Reto", 4, 40, 12));
+        exerciciosPeito.add(new Exercicio("Crucifixo Inclinado", 4, 20, 12));
+        exerciciosPeito.add(new Exercicio("Flexão", 3, 0, 15));
+        Treino peito = new Treino("Peito", R.drawable.ic_peito, 4, 12);
+        peito.setListaExercicios(exerciciosPeito);
+        listaTreinos.add(peito);
+
+        // COSTAS
+        ArrayList<Exercicio> exerciciosCostas = new ArrayList<>();
+        exerciciosCostas.add(new Exercicio("Puxada na frente", 4, 35, 10));
+        exerciciosCostas.add(new Exercicio("Remada curvada", 4, 30, 10));
+        Treino costas = new Treino("Costas", R.drawable.ic_costas, 4, 10);
+        costas.setListaExercicios(exerciciosCostas);
+        listaTreinos.add(costas);
+
+        // PERNA
+        ArrayList<Exercicio> exerciciosPerna = new ArrayList<>();
+        exerciciosPerna.add(new Exercicio("Agachamento", 4, 50, 12));
+        exerciciosPerna.add(new Exercicio("Leg Press", 4, 120, 15));
+        Treino perna = new Treino("Perna", R.drawable.ic_perna, 4, 15);
+        perna.setListaExercicios(exerciciosPerna);
+        listaTreinos.add(perna);
+
+        // BRAÇO
+        ArrayList<Exercicio> exerciciosBraco = new ArrayList<>();
+        exerciciosBraco.add(new Exercicio("Rosca Direta", 3, 25, 10));
+        exerciciosBraco.add(new Exercicio("Tríceps Testa", 3, 15, 12));
+        Treino braco = new Treino("Braço", R.drawable.ic_braco, 3, 10);
+        braco.setListaExercicios(exerciciosBraco);
+        listaTreinos.add(braco);
+
+        // Configuração do RecyclerView
         treinoAdapter = new TreinoAdapter(listaTreinos, this);
         recyclerTreinos.setLayoutManager(
                 new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         );
         recyclerTreinos.setAdapter(treinoAdapter);
 
-        // Clique no botão de Anotações
+        // Botões de navegação
         btnAnotacoes.setOnClickListener(v -> {
-            Intent intent = new Intent(TreinosActivity.this, AnotacoesActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(this, AnotacoesActivity.class));
         });
 
-        // Clique no botão de Histórico
         btnHistorico.setOnClickListener(v -> {
             // TODO: Implementar tela de histórico
         });
 
-        // Clique no botão flutuante para adicionar treino
         btnAdicionarTreino.setOnClickListener(v -> {
-            Intent intent = new Intent(TreinosActivity.this, AdicionarTreinoActivity.class);
+            Intent intent = new Intent(this, AdicionarExercicioActivity.class);
             startActivityForResult(intent, REQUEST_ADICIONAR_TREINO);
         });
 
-        // Clique no calendário
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
-            // TODO: Lógica futura para treinos por data
+            // TODO: Implementar lógica de treinos por data
         });
     }
 
-    // Receber novo treino vindo da tela de AdicionarTreino
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -106,8 +125,9 @@ public class TreinosActivity extends AppCompatActivity {
         if (requestCode == REQUEST_ADICIONAR_TREINO && resultCode == RESULT_OK && data != null) {
             String nome = data.getStringExtra("nome");
             int imagem = data.getIntExtra("imagem", R.drawable.ic_peito);
-
-            listaTreinos.add(new Treino(nome, imagem));
+            Treino novoTreino = new Treino(nome, imagem);
+            novoTreino.setListaExercicios(new ArrayList<>()); // Começa vazio
+            listaTreinos.add(novoTreino);
             treinoAdapter.notifyItemInserted(listaTreinos.size() - 1);
         }
     }

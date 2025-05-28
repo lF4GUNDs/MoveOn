@@ -4,5 +4,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="cardBackground">#2F3238</color>
     <color name="cardBackground_night">#1F1F1F</color>
+    <color name="verde_destaque">#84BF04</color>
 
 </resources>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#222426"
+    android:padding="24dp">
+
+    <!-- Status do exercício -->
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Executando exercício..."
+        android:textSize="18sp"
+        android:textColor="@color/verde_destaque"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Série atual -->
+    <TextView
+        android:id="@+id/tvSerieAtual"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Série: 1/4"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvStatus"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <!-- Peso -->
+    <TextView
+        android:id="@+id/tvPeso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Peso: 30kg"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvSerieAtual"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Repetições -->
+    <TextView
+        android:id="@+id/tvReps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reps: 12"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@id/tvPeso"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Descanso -->
+    <TextView
+        android:id="@+id/tvDescanso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="#84BF04"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/tvReps"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <!-- Botão: Completar Série -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnCompletarSerie"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Completar Série"
+        android:textColor="@android:color/white"
+        app:backgroundTint="#84BF04"
+        app:cornerRadius="12dp"
+        app:layout_constraintTop_toBottomOf="@id/tvDescanso"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

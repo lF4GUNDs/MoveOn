@@ -2,6 +2,7 @@ package com.example.moveon.adapters;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moveon.R;
+import com.example.moveon.activities.ListaDeExerciciosActivity;
 import com.example.moveon.models.Treino;
 
 import java.util.ArrayList;
@@ -42,23 +44,29 @@ public class TreinoAdapter extends RecyclerView.Adapter<TreinoAdapter.TreinoView
         holder.nomeTreino.setText(treino.getNome());
         holder.imagemTreino.setImageResource(treino.getImagemResId());
 
+        // Clique no item → enviar treino completo via intent
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, ListaDeExerciciosActivity.class);
+            intent.putExtra("treino", treino);  // ENVIA O OBJETO TREINO COMPLETO
+            context.startActivity(intent);
+        });
+
+        // Botão de excluir
         holder.btnExcluir.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
                     .setTitle("Remover treino")
                     .setMessage("Deseja realmente remover este treino?")
                     .setPositiveButton("Sim", (dialog, which) -> {
-                        listaTreinos.remove(position);
-                        notifyItemRemoved(position);
-                        notifyItemRangeChanged(position, listaTreinos.size());
-                        Toast.makeText(context, "Treino removido", Toast.LENGTH_SHORT).show();
+                        int pos = holder.getAdapterPosition();
+                        if (pos != RecyclerView.NO_POSITION) {
+                            listaTreinos.remove(pos);
+                            notifyItemRemoved(pos);
+                            notifyItemRangeChanged(pos, listaTreinos.size());
+                            Toast.makeText(context, "Treino removido", Toast.LENGTH_SHORT).show();
+                        }
                     })
                     .setNegativeButton("Cancelar", null)
                     .show();
-        });
-
-        holder.itemView.setOnClickListener(v -> {
-            // Aqui você pode abrir a tela com os exercícios do treino
-            Toast.makeText(context, "Abrir treino: " + treino.getNome(), Toast.LENGTH_SHORT).show();
         });
     }
 

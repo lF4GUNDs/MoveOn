@@ -17,7 +17,6 @@ import com.example.moveon.activities.TreinosActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView bgImage;
     private Button btnStart;
     private TextView tvFrase;
 
