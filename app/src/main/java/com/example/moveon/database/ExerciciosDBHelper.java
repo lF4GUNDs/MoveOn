@@ -9,11 +9,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.moveon.models.Exercicio;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ExerciciosDBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "moveon.db";
-    private static final int DATABASE_VERSION = 2; // Atualize a versão do banco!
+    private static final int DATABASE_VERSION = 2;
 
     public static final String TABLE_NAME = "exercicios";
     public static final String COLUMN_ID = "id";
@@ -22,7 +23,7 @@ public class ExerciciosDBHelper extends SQLiteOpenHelper {
     public static final String COLUMN_REPETICOES = "repeticoes";
     public static final String COLUMN_PESO = "peso";
     public static final String COLUMN_TREINO_ID = "treino_id";
-    public static final String COLUMN_PERFIL_ID = "perfil_id"; // NOVO CAMPO
+    public static final String COLUMN_PERFIL_ID = "perfil_id";
 
     public ExerciciosDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -48,7 +49,6 @@ public class ExerciciosDBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // Agora inclui o perfilId também
     public long adicionarExercicio(Exercicio e, int treinoId, int perfilId) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
@@ -76,7 +76,6 @@ public class ExerciciosDBHelper extends SQLiteOpenHelper {
         return db.delete(TABLE_NAME, COLUMN_ID + " = ?", new String[]{String.valueOf(id)});
     }
 
-    // Agora busca por treino E perfil
     public ArrayList<Exercicio> listarExerciciosPorTreino(int treinoId, int perfilId) {
         ArrayList<Exercicio> lista = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
@@ -136,5 +135,35 @@ public class ExerciciosDBHelper extends SQLiteOpenHelper {
         for (Exercicio e : exerciciosPadrao) {
             adicionarExercicio(e, treinoId, perfilId);
         }
+    }
+
+    // ✅ Método adicional para obter séries por grupo muscular
+    public HashMap<String, Integer> getSeriesPorGrupoMuscular(int perfilId) {
+        HashMap<String, Integer> mapa = new HashMap<>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT " + COLUMN_NOME + ", SUM(" + COLUMN_SERIES + ") as total_series " +
+                "FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_PERFIL_ID + " = ?" +
+                " GROUP BY " + COLUMN_NOME;
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(perfilId)});
+
+        try {
+            while (cursor.moveToNext()) {
+                String nomeGrupo = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOME));
+                int totalSeries = cursor.getInt(cursor.getColumnIndexOrThrow("total_series"));
+
+                if (mapa.containsKey(nomeGrupo)) {
+                    mapa.put(nomeGrupo, mapa.get(nomeGrupo) + totalSeries);
+                } else {
+                    mapa.put(nomeGrupo, totalSeries);
+                }
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return mapa;
     }
 }

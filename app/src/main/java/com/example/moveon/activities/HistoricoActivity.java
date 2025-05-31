@@ -1,23 +1,27 @@
 package com.example.moveon.activities;
 
+import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moveon.R;
-import com.example.moveon.adapters.HistoricoAdapter;
 import com.example.moveon.database.ExecucaoExercicioDBHelper;
-import com.example.moveon.models.HistoricoTreino;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.ValueFormatter;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class HistoricoActivity extends AppCompatActivity {
 
-    private RecyclerView recyclerHistorico;
-    private ExecucaoExercicioDBHelper dbHelper;
+    private BarChart barChart;
     private int perfilId;
 
     @Override
@@ -25,19 +29,60 @@ public class HistoricoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_historico);
 
+        barChart = findViewById(R.id.barChart);
         perfilId = getIntent().getIntExtra("perfilId", -1);
-        recyclerHistorico = findViewById(R.id.recyclerHistorico);
-        dbHelper = new ExecucaoExercicioDBHelper(this);
 
         if (perfilId == -1) {
-            Toast.makeText(this, "Perfil inválido!", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
 
-        List<HistoricoTreino> historico = dbHelper.buscarHistoricoTreinos(perfilId);
+        ExecucaoExercicioDBHelper dbHelper = new ExecucaoExercicioDBHelper(this);
+        Map<String, Integer> dadosGrupo = dbHelper.getSeriesPorGrupoMuscular(perfilId);
 
-        recyclerHistorico.setLayoutManager(new LinearLayoutManager(this));
-        recyclerHistorico.setAdapter(new HistoricoAdapter(historico));
+        List<BarEntry> entries = new ArrayList<>();
+        List<String> labels = new ArrayList<>();
+
+        int index = 0;
+        for (Map.Entry<String, Integer> entry : dadosGrupo.entrySet()) {
+            entries.add(new BarEntry(index, entry.getValue()));
+            labels.add(entry.getKey());
+            index++;
+        }
+
+        BarDataSet dataSet = new BarDataSet(entries, "Séries por Grupo Muscular");
+        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        dataSet.setValueTextColor(Color.WHITE);
+        dataSet.setValueTextSize(12f);
+
+        BarData barData = new BarData(dataSet);
+        barChart.setData(barData);
+
+        Description desc = new Description();
+        desc.setText("Histórico de Séries");
+        desc.setTextColor(Color.LTGRAY);
+        desc.setTextSize(12f);
+        barChart.setDescription(desc);
+
+        // ✅ Corrigido: ValueFormatter usando classe anônima (sem lambda)
+        barChart.getXAxis().setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                int i = (int) value;
+                if (i >= 0 && i < labels.size()) {
+                    return labels.get(i);
+                }
+                return "";
+            }
+        });
+
+        barChart.getXAxis().setGranularity(1f);
+        barChart.getXAxis().setTextColor(Color.WHITE);
+        barChart.getAxisLeft().setTextColor(Color.WHITE);
+        barChart.getAxisRight().setTextColor(Color.WHITE);
+        barChart.getLegend().setTextColor(Color.WHITE);
+        barChart.setFitBars(true);
+        barChart.animateY(1000);
+        barChart.invalidate();
     }
 }

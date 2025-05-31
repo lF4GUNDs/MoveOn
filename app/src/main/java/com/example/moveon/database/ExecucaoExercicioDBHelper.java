@@ -9,7 +9,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.example.moveon.models.HistoricoTreino;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ExecucaoExercicioDBHelper extends SQLiteOpenHelper {
 
@@ -120,5 +122,44 @@ public class ExecucaoExercicioDBHelper extends SQLiteOpenHelper {
         }
 
         return lista;
+    }
+
+    // ✅ Novo método para gráfico de barras: séries por grupo muscular
+    public Map<String, Integer> getSeriesPorGrupoMuscular(int perfilId) {
+        Map<String, Integer> mapa = new HashMap<>();
+        SQLiteDatabase db = getReadableDatabase();
+
+        String query = "SELECT " + COLUMN_NOME_EXERCICIO + ", SUM(" + COLUMN_SERIE_NUMERO + ") AS total_series " +
+                "FROM " + TABLE_NAME + " WHERE " + COLUMN_PERFIL_ID + " = ? " +
+                "GROUP BY " + COLUMN_NOME_EXERCICIO;
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(perfilId)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String nome = cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NOME_EXERCICIO)).toLowerCase();
+                int series = cursor.getInt(cursor.getColumnIndexOrThrow("total_series"));
+
+                String grupo;
+                if (nome.contains("supino") || nome.contains("crucifixo")) {
+                    grupo = "Peito";
+                } else if (nome.contains("remada") || nome.contains("puxada") || nome.contains("costas") || nome.contains("terra")) {
+                    grupo = "Costas";
+                } else if (nome.contains("agachamento") || nome.contains("perna") || nome.contains("leg") || nome.contains("extensora")) {
+                    grupo = "Perna";
+                } else if (nome.contains("rosca") || nome.contains("tríceps") || nome.contains("triceps") || nome.contains("bíceps")) {
+                    grupo = "Braço";
+                } else {
+                    grupo = "Outros";
+                }
+
+                int total = mapa.getOrDefault(grupo, 0);
+                mapa.put(grupo, total + series);
+
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return mapa;
     }
 }
