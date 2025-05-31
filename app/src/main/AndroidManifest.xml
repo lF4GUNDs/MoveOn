@@ -25,36 +25,45 @@
             </intent-filter>
         </activity>
 
-        <!-- Demais activities -->
-        <activity android:name=".activities.PerfisActivity"
+        <!-- Telas de Perfis -->
+        <activity
+            android:name=".activities.PerfisActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.CadastroPerfilActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activities.CadastroPerfilActivity"
+        <!-- Telas de Treinos -->
+        <activity
+            android:name=".activities.TreinosActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ListaDeExerciciosActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.AdicionarExercicioActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.EditarExercicioActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.ExecutarExercicioActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".activities.TreinosActivity"
+        <!-- Telas de Anotações -->
+        <activity
+            android:name=".activities.AnotacoesActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".activities.AdicionarExercicioActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
-        <activity android:name=".activities.AnotacoesActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
-        <activity android:name=".activities.NovaAnotacaoActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
-        <activity android:name=".activities.ListaDeExerciciosActivity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-
-        <activity android:name=".activities.EditarExercicioActivity"
+        <activity
+            android:name=".activities.NovaAnotacaoActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
 

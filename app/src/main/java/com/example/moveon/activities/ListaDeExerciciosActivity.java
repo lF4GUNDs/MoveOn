@@ -30,6 +30,8 @@ public class ListaDeExerciciosActivity extends AppCompatActivity {
     private Treino treinoSelecionado;
     private ExerciciosDBHelper dbHelper;
 
+    private int perfilId;
+
     private ActivityResultLauncher<Intent> launcherAdicionarExercicio;
     private ActivityResultLauncher<Intent> launcherEditarExercicio;
 
@@ -38,58 +40,72 @@ public class ListaDeExerciciosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_de_exercicios);
 
+        // Inicializações
         recyclerExercicios = findViewById(R.id.recyclerExercicios);
         btnAdicionarExercicio = findViewById(R.id.btnAdicionarExercicio);
         btnIniciar = findViewById(R.id.btnIniciarExecucao);
-
-        treinoSelecionado = (Treino) getIntent().getSerializableExtra("treino");
         dbHelper = new ExerciciosDBHelper(this);
 
-        if (treinoSelecionado != null) {
-            listaExercicios = dbHelper.listarExerciciosPorTreino(treinoSelecionado.getId());
-        } else {
-            listaExercicios = new ArrayList<>();
+        // Recupera dados da intent
+        treinoSelecionado = (Treino) getIntent().getSerializableExtra("treino");
+        perfilId = getIntent().getIntExtra("perfilId", -1);
+
+        if (treinoSelecionado == null || perfilId == -1) {
+            Toast.makeText(this, "Dados inválidos!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
 
+        // Carrega exercícios do treino e perfil
+        listaExercicios = dbHelper.listarExerciciosPorTreino(treinoSelecionado.getId(), perfilId);
+        if (listaExercicios.isEmpty()) {
+            dbHelper.preencherExerciciosPadrao(treinoSelecionado.getId(), treinoSelecionado.getNome(), perfilId);
+            listaExercicios = dbHelper.listarExerciciosPorTreino(treinoSelecionado.getId(), perfilId);
+            Toast.makeText(this, "Exercícios padrão adicionados!", Toast.LENGTH_SHORT).show();
+        }
+
+        // Configura o adapter e RecyclerView
         adapter = new ExercicioListaAdapter(listaExercicios, this::editarExercicio, this::excluirExercicio);
         recyclerExercicios.setLayoutManager(new LinearLayoutManager(this));
         recyclerExercicios.setAdapter(adapter);
 
+        // Iniciar treino com lista completa
         btnIniciar.setOnClickListener(v -> {
             if (!listaExercicios.isEmpty()) {
                 Intent intent = new Intent(this, ExecutarExercicioActivity.class);
-                intent.putExtra("exercicio", listaExercicios.get(0));
+                intent.putExtra("listaExercicios", listaExercicios); // ✅ Envia lista completa
+                intent.putExtra("perfilId", perfilId);
                 startActivity(intent);
             } else {
                 Toast.makeText(this, "Nenhum exercício adicionado!", Toast.LENGTH_SHORT).show();
             }
         });
 
+        // Lançador para adicionar exercício
         launcherAdicionarExercicio = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
-                        listaExercicios.clear();
-                        listaExercicios.addAll(dbHelper.listarExerciciosPorTreino(treinoSelecionado.getId()));
-                        adapter.notifyDataSetChanged();
+                        recarregarLista();
                     }
                 }
         );
 
+        // Lançador para editar exercício
         launcherEditarExercicio = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == RESULT_OK) {
-                        listaExercicios.clear();
-                        listaExercicios.addAll(dbHelper.listarExerciciosPorTreino(treinoSelecionado.getId()));
-                        adapter.notifyDataSetChanged();
+                        recarregarLista();
                     }
                 }
         );
 
+        // Ação de adicionar exercício
         btnAdicionarExercicio.setOnClickListener(v -> {
             Intent intent = new Intent(this, AdicionarExercicioActivity.class);
             intent.putExtra("treinoId", treinoSelecionado.getId());
+            intent.putExtra("perfilId", perfilId);
             launcherAdicionarExercicio.launch(intent);
         });
     }
@@ -98,6 +114,7 @@ public class ListaDeExerciciosActivity extends AppCompatActivity {
         Intent intent = new Intent(this, EditarExercicioActivity.class);
         intent.putExtra("exercicio", exercicio);
         intent.putExtra("posicao", posicao);
+        intent.putExtra("perfilId", perfilId);
         launcherEditarExercicio.launch(intent);
     }
 
@@ -108,5 +125,11 @@ public class ListaDeExerciciosActivity extends AppCompatActivity {
             listaExercicios.remove(posicao);
             adapter.notifyItemRemoved(posicao);
         }
+    }
+
+    private void recarregarLista() {
+        listaExercicios.clear();
+        listaExercicios.addAll(dbHelper.listarExerciciosPorTreino(treinoSelecionado.getId(), perfilId));
+        adapter.notifyDataSetChanged();
     }
 }

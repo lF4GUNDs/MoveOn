@@ -1,15 +1,12 @@
 package com.example.moveon.adapters;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,10 +21,12 @@ public class TreinoAdapter extends RecyclerView.Adapter<TreinoAdapter.TreinoView
 
     private ArrayList<Treino> listaTreinos;
     private Context context;
+    private int perfilId; // ✅ Novo campo
 
-    public TreinoAdapter(ArrayList<Treino> listaTreinos, Context context) {
+    public TreinoAdapter(ArrayList<Treino> listaTreinos, Context context, int perfilId) {
         this.listaTreinos = listaTreinos;
         this.context = context;
+        this.perfilId = perfilId;
     }
 
     @NonNull
@@ -44,13 +43,13 @@ public class TreinoAdapter extends RecyclerView.Adapter<TreinoAdapter.TreinoView
         holder.nomeTreino.setText(treino.getNome());
         holder.imagemTreino.setImageResource(treino.getImagemResId());
 
-        // Clique no item → enviar treino completo via intent
+        // Clique no item → enviar treino completo + perfilId via intent
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, ListaDeExerciciosActivity.class);
-            intent.putExtra("treino", treino);  // ENVIA O OBJETO TREINO COMPLETO
+            intent.putExtra("treino", treino);
+            intent.putExtra("perfilId", perfilId); // ✅ envia perfilId
             context.startActivity(intent);
         });
-
     }
 
     @Override
@@ -61,7 +60,6 @@ public class TreinoAdapter extends RecyclerView.Adapter<TreinoAdapter.TreinoView
     public static class TreinoViewHolder extends RecyclerView.ViewHolder {
         ImageView imagemTreino;
         TextView nomeTreino;
-        ImageButton btnExcluir;
 
         public TreinoViewHolder(@NonNull View itemView) {
             super(itemView);

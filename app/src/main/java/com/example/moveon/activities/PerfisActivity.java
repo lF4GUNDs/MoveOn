@@ -32,7 +32,7 @@ public class PerfisActivity extends AppCompatActivity {
 
         recyclerPerfis = findViewById(R.id.recyclerPerfis);
         btnAdicionarPerfil = findViewById(R.id.btnAdicionarPerfil);
-        txtSemPerfis = findViewById(R.id.txtSemPerfis); // Mensagem de "nenhum perfil"
+        txtSemPerfis = findViewById(R.id.txtSemPerfis);
 
         recyclerPerfis.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
@@ -46,11 +46,12 @@ public class PerfisActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        // Recarrega os perfis toda vez que volta para essa tela
+        // Recarrega os perfis
         listaPerfis = PerfilStorage.obterPerfis(this);
 
         adapter = new PerfilAdapter(listaPerfis, this, perfil -> {
             Intent i = new Intent(PerfisActivity.this, TreinosActivity.class);
+            i.putExtra("perfilId", perfil.getId()); // <-- envia o ID do perfil
             i.putExtra("nomePerfil", perfil.getNome());
             i.putExtra("imgPerfil", perfil.getImagemResId());
             startActivity(i);
@@ -58,7 +59,6 @@ public class PerfisActivity extends AppCompatActivity {
 
         recyclerPerfis.setAdapter(adapter);
 
-        // Exibe mensagem se não houver perfis
         if (listaPerfis.isEmpty()) {
             txtSemPerfis.setVisibility(View.VISIBLE);
             recyclerPerfis.setVisibility(View.GONE);

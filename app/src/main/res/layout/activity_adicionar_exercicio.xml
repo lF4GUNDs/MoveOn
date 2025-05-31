@@ -1,79 +1,130 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
+    android:background="#222426"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/btnSalvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="61dp"
+        android:layout_marginEnd="30dp"
+        android:backgroundTint="#84BF04"
+        android:text="Salvar"
+        android:textColor="@android:color/white"
+        app:layout_constraintEnd_toEndOf="@+id/editPeso"
+        app:layout_constraintTop_toBottomOf="@+id/editPeso" />
 
     <EditText
-        android:id="@+id/editNome"
+        android:id="@+id/editPeso"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Nome do exercício"
-        android:inputType="textPersonName"
-        android:textColor="@android:color/white"
-        android:textColorHint="#CCCCCC"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="115dp"
         android:backgroundTint="#84BF04"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <EditText
-        android:id="@+id/editSeries"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:hint="Séries"
-        android:inputType="number"
+        android:hint="Ex: 30.5"
+        android:inputType="numberDecimal"
         android:textColor="@android:color/white"
-        android:textColorHint="#CCCCCC"
-        android:backgroundTint="#84BF04"
-        app:layout_constraintTop_toBottomOf="@id/editNome"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColorHint="#AAAAAA"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
+        app:layout_constraintStart_toEndOf="@+id/labelPeso"
+        app:layout_constraintTop_toBottomOf="@+id/editRepeticoes" />
+
+    <TextView
+        android:id="@+id/labelPeso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginEnd="18dp"
+        android:text="Peso (kg)"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editPeso"
+        app:layout_constraintEnd_toStartOf="@+id/editPeso"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/labelSeries"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="123dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="26dp"
+        android:text="Séries"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/editRepeticoes"
+        app:layout_constraintEnd_toStartOf="@+id/editSeries"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/labelRepeticoes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="92dp"
+        android:layout_marginEnd="16dp"
+        android:text="Repetições"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBaseline_toBaselineOf="@+id/editRepeticoes"
+        app:layout_constraintEnd_toStartOf="@+id/editRepeticoes"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/labelNome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="45dp"
+        android:layout_marginTop="208dp"
+        android:layout_marginEnd="16dp"
+        android:text="Nome do exercício"
+        android:textColor="#FFFFFF"
+        app:layout_constraintEnd_toStartOf="@+id/editNome"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editRepeticoes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Repetições"
+        android:layout_marginTop="73dp"
+        android:layout_marginEnd="115dp"
+        android:backgroundTint="#84BF04"
+        android:hint="Ex: 12"
         android:inputType="number"
         android:textColor="@android:color/white"
-        android:textColorHint="#CCCCCC"
-        android:backgroundTint="#84BF04"
-        app:layout_constraintTop_toBottomOf="@id/editSeries"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textColorHint="#AAAAAA"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
+        app:layout_constraintStart_toEndOf="@+id/labelRepeticoes"
+        app:layout_constraintTop_toBottomOf="@+id/editNome" />
 
     <EditText
-        android:id="@+id/editPeso"
-        android:layout_width="116dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="#84BF04"
-        android:hint="Peso (kg)"
-        android:inputType="numberDecimal"
-        android:textColor="@android:color/white"
-        android:textColorHint="#CCCCCC"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.809"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editRepeticoes" />
-
-    <Button
-        android:id="@+id/btnSalvar"
+        android:id="@+id/editSeries"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Salvar"
-        android:textAllCaps="false"
+        android:layout_marginEnd="115dp"
         android:backgroundTint="#84BF04"
-        android:textColor="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@id/editPeso"
-        app:layout_constraintStart_toStartOf="parent"
+        android:hint="Ex: 4"
+        android:inputType="number"
+        android:textColor="@android:color/white"
+        android:textColorHint="#AAAAAA"
+        app:layout_constraintBaseline_toBaselineOf="@+id/labelSeries"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        app:layout_constraintStart_toEndOf="@+id/labelSeries" />
+
+    <EditText
+        android:id="@+id/editNome"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#84BF04"
+        android:hint="Nome"
+        android:inputType="textPersonName"
+        android:textColor="@android:color/white"
+        android:textColorHint="#AAAAAA"
+        app:layout_constraintBaseline_toBaselineOf="@+id/labelNome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/labelNome" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

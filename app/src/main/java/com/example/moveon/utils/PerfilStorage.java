@@ -14,11 +14,31 @@ public class PerfilStorage {
     private static final String PREFS_NAME = "perfil_prefs";
     private static final String KEY_PERFIS = "lista_perfis";
 
-    // Salva um novo perfil
+    // Salva um novo perfil com ID único
     public static void salvarPerfil(Context context, Perfil novoPerfil) {
         ArrayList<Perfil> perfis = obterPerfis(context);
+
+        // Verifica se já existe um perfil com o mesmo ID
+        for (Perfil p : perfis) {
+            if (p.getId() == novoPerfil.getId()) {
+                return; // já existe, não salva duplicado
+            }
+        }
+
         perfis.add(novoPerfil);
         salvarLista(context, perfis);
+    }
+
+    // Gera um novo ID único baseado na lista atual
+    public static int gerarNovoId(Context context) {
+        ArrayList<Perfil> perfis = obterPerfis(context);
+        int maxId = 0;
+        for (Perfil p : perfis) {
+            if (p.getId() > maxId) {
+                maxId = p.getId();
+            }
+        }
+        return maxId + 1;
     }
 
     // Recupera todos os perfis salvos
@@ -30,6 +50,15 @@ public class PerfilStorage {
             return new Gson().fromJson(json, type);
         }
         return new ArrayList<>();
+    }
+
+    // Busca um perfil pelo ID
+    public static Perfil buscarPerfilPorId(Context context, int id) {
+        ArrayList<Perfil> perfis = obterPerfis(context);
+        for (Perfil p : perfis) {
+            if (p.getId() == id) return p;
+        }
+        return null;
     }
 
     // Salva a lista completa (usada para deletar também)

@@ -14,6 +14,8 @@ import com.example.moveon.adapters.ImagemAdapter;
 import com.example.moveon.models.Perfil;
 import com.example.moveon.utils.PerfilStorage;
 
+import java.util.List;
+
 public class CadastroPerfilActivity extends AppCompatActivity {
 
     private EditText editNome;
@@ -44,12 +46,20 @@ public class CadastroPerfilActivity extends AppCompatActivity {
         btnSalvarPerfil.setOnClickListener(v -> {
             String nome = editNome.getText().toString().trim();
             if (!nome.isEmpty()) {
-                Perfil perfil = new Perfil(nome, imagemSelecionada);
+                List<Perfil> perfisExistentes = PerfilStorage.obterPerfis(this);
 
-                // ✅ Salvando perfil com SharedPreferences via PerfilStorage
-                PerfilStorage.salvarPerfil(CadastroPerfilActivity.this, perfil);
+                // Novo ID = maior ID + 1
+                int novoId = 1;
+                for (Perfil p : perfisExistentes) {
+                    if (p.getId() >= novoId) {
+                        novoId = p.getId() + 1;
+                    }
+                }
 
-                // Redirecionar de volta para a lista de perfis
+                Perfil novoPerfil = new Perfil(novoId, nome, imagemSelecionada);
+                PerfilStorage.salvarPerfil(this, novoPerfil);
+
+                // Retorna para a tela de perfis
                 Intent intent = new Intent(CadastroPerfilActivity.this, PerfisActivity.class);
                 startActivity(intent);
                 finish();

@@ -2,7 +2,8 @@ package com.example.moveon.activities;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.widget.Button;
+import android.os.SystemClock;
+import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -13,111 +14,115 @@ import com.example.moveon.database.ExecucaoExercicioDBHelper;
 import com.example.moveon.models.Exercicio;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 public class ExecutarExercicioActivity extends AppCompatActivity {
 
-    private TextView tvSerie, tvPeso, tvReps, tvDescanso, tvStatus;
-    private Button btnCompletarSerie;
+    private TextView txtNome, txtSeriesInfo, txtContador, txtStatus;
+    private TextView btnCompletarSerie;
+    private Chronometer cronometroTreino;
 
     private int serieAtual = 1;
-    private int totalSeries, reps, descansoSegundos = 60;
-    private float peso; // O tipo float está correto aqui
-    private String nomeExercicio;
-    private int perfilId = 1; // Ajustar para perfil logado
+    private int indiceExercicioAtual = 0;
+    private Exercicio exercicio;
+    private ArrayList<Exercicio> lista;
 
-    private CountDownTimer timer;
+    private ExecucaoExercicioDBHelper dbHelper;
+    private int perfilId = -1;
+    private final int tempoDescanso = 60; // segundos
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_executar_exercicio);
 
-        tvSerie = findViewById(R.id.tvSerieAtual);
-        tvPeso = findViewById(R.id.tvPeso);
-        tvReps = findViewById(R.id.tvReps);
-        tvDescanso = findViewById(R.id.tvDescanso);
-        tvStatus = findViewById(R.id.tvStatus);
+        txtNome = findViewById(R.id.txtNomeExercicio);
+        txtSeriesInfo = findViewById(R.id.txtSeriesInfo);
+        txtContador = findViewById(R.id.txtContador);
+        txtStatus = findViewById(R.id.tvDescanso);
         btnCompletarSerie = findViewById(R.id.btnCompletarSerie);
+        cronometroTreino = findViewById(R.id.cronometroTreino);
 
-        // Recuperar exercício vindo da intent
-        Exercicio exercicio = (Exercicio) getIntent().getSerializableExtra("exercicio");
+        dbHelper = new ExecucaoExercicioDBHelper(this);
+        perfilId = getIntent().getIntExtra("perfilId", -1);
+        lista = (ArrayList<Exercicio>) getIntent().getSerializableExtra("listaExercicios");
 
-        if (exercicio != null) {
-            nomeExercicio = exercicio.getNome();
-            totalSeries = exercicio.getSeries();
-            peso = exercicio.getPeso();
-            reps = exercicio.getReps();
-        } else {
-            nomeExercicio = "Exercício Desconhecido";
-            totalSeries = 4;
-            peso = 30.0f;
-            reps = 12;
+        if (perfilId == -1 || lista == null || lista.isEmpty()) {
+            Toast.makeText(this, "Dados inválidos para execução", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
         }
 
-        tvPeso.setText("Peso: " + peso + " kg");
-        tvReps.setText("Reps: " + reps);
-        atualizarUI();
+        cronometroTreino.setBase(SystemClock.elapsedRealtime());
+        cronometroTreino.start();
+
+        iniciarExercicio(indiceExercicioAtual);
 
         btnCompletarSerie.setOnClickListener(v -> {
-            salvarExecucaoNoBanco();
-            if (serieAtual < totalSeries) {
-                iniciarDescanso();
-            } else {
-                tvStatus.setText("Treino finalizado!");
-                btnCompletarSerie.setEnabled(false);
-            }
+            salvarExecucaoAtual();
+            iniciarDescanso();
         });
     }
 
+    private void iniciarExercicio(int index) {
+        exercicio = lista.get(index);
+        serieAtual = 1;
+        atualizarUI();
+        txtStatus.setText("Executando exercício...");
+    }
+
+    private void iniciarProximoExercicio() {
+        if (indiceExercicioAtual < lista.size()) {
+            iniciarExercicio(indiceExercicioAtual);
+        } else {
+            cronometroTreino.stop();
+            Toast.makeText(this, "🏁 Treino finalizado!", Toast.LENGTH_LONG).show();
+            finish();
+        }
+    }
+
     private void atualizarUI() {
-        tvSerie.setText("Série: " + serieAtual + "/" + totalSeries);
-        tvDescanso.setText("");
-        tvStatus.setText("Executando exercício...");
+        txtNome.setText(exercicio.getNome());
+        txtSeriesInfo.setText("Série " + serieAtual + " de " + exercicio.getSeries());
+        txtContador.setText("Peso: " + exercicio.getPeso() + "kg | Reps: " + exercicio.getReps());
     }
 
-    private void iniciarDescanso() {
-        tvStatus.setText("Descanso...");
-        btnCompletarSerie.setEnabled(false);
-
-        timer = new CountDownTimer(descansoSegundos * 1000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                tvDescanso.setText("Descanso: " + millisUntilFinished / 1000 + "s");
-            }
-
-            @Override
-            public void onFinish() {
-                serieAtual++;
-                atualizarUI();
-                btnCompletarSerie.setEnabled(true);
-            }
-        }.start();
-    }
-
-    private void salvarExecucaoNoBanco() {
-        ExecucaoExercicioDBHelper dbHelper = new ExecucaoExercicioDBHelper(this);
-        String dataHoje = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(new Date());
+    private void salvarExecucaoAtual() {
+        String dataAtual = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
         dbHelper.salvarExecucao(
                 perfilId,
-                dataHoje,
-                nomeExercicio,
+                dataAtual,
+                exercicio.getNome(),
                 serieAtual,
-                (int) peso,
-                reps,
-                descansoSegundos
+                exercicio.getReps(),
+                exercicio.getPeso(),
+                tempoDescanso
         );
-
-        Toast.makeText(this, "Série " + serieAtual + " salva!", Toast.LENGTH_SHORT).show();
     }
 
-    @Override
-    protected void onDestroy() {
-        if (timer != null) {
-            timer.cancel();
-        }
-        super.onDestroy();
+    private void iniciarDescanso() {
+        btnCompletarSerie.setEnabled(false);
+        txtStatus.setText("Descanso: " + tempoDescanso + "s");
+
+        new CountDownTimer(tempoDescanso * 1000L, 1000) {
+            public void onTick(long millisUntilFinished) {
+                txtStatus.setText("Descanso: " + (millisUntilFinished / 1000) + "s");
+            }
+
+            public void onFinish() {
+                serieAtual++;
+                if (serieAtual > exercicio.getSeries()) {
+                    indiceExercicioAtual++;
+                    iniciarProximoExercicio();
+                } else {
+                    atualizarUI();
+                    txtStatus.setText("Executando exercício...");
+                }
+                btnCompletarSerie.setEnabled(true);
+            }
+        }.start();
     }
 }
