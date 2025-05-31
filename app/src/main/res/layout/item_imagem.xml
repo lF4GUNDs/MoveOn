@@ -8,11 +8,8 @@
         android:id="@+id/imgItem"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_margin="8dp"
+        android:layout_gravity="center"
         android:scaleType="centerCrop"
-        android:background="@drawable/rounded_background"
-        android:clipToOutline="true"
-        android:padding="4dp"
         android:contentDescription="Imagem do perfil"
-        android:src="@drawable/ic_user" />
+        android:padding="4dp" />
 </FrameLayout>

@@ -4,14 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Treino implements Serializable {
+
+    private int id; // Novo campo para banco de dados
     private String nome;
     private int imagemResId;
     private int totalSeries;
     private int reps;
-    private ArrayList<Exercicio> listaExercicios; // Associar exercícios
+    private ArrayList<Exercicio> listaExercicios;
 
     public Treino(String nome, int imagemResId) {
-        this(nome, imagemResId, 4, 12); // Valores padrão
+        this(nome, imagemResId, 4, 12);
     }
 
     public Treino(String nome, int imagemResId, int totalSeries, int reps) {
@@ -19,7 +21,26 @@ public class Treino implements Serializable {
         this.imagemResId = imagemResId;
         this.totalSeries = totalSeries;
         this.reps = reps;
-        this.listaExercicios = new ArrayList<>(); // Inicializar lista
+        this.listaExercicios = new ArrayList<>();
+    }
+
+    // Novo construtor opcional com ID (se necessário)
+    public Treino(int id, String nome, int imagemResId, int totalSeries, int reps) {
+        this.id = id;
+        this.nome = nome;
+        this.imagemResId = imagemResId;
+        this.totalSeries = totalSeries;
+        this.reps = reps;
+        this.listaExercicios = new ArrayList<>();
+    }
+
+    // Getters e Setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getNome() {

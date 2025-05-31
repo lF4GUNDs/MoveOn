@@ -12,72 +12,64 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="42dp"
-        android:layout_marginBottom="657dp"
+        android:layout_marginBottom="21dp"
         android:text="Criar Perfil"
         android:textColor="@color/white"
         android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/editNome"
+        app:layout_constraintStart_toStartOf="@+id/editNome"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editNome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="95dp"
-        android:layout_marginBottom="588dp"
+        android:layout_marginStart="3dp"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/rounded_background"
         android:hint="Nome do Perfil"
         android:inputType="textPersonName"
         android:padding="12dp"
         android:textColor="@android:color/white"
         android:textColorHint="#AAAAAA"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="131dp"
-        android:layout_marginTop="163dp"
-        android:layout_marginEnd="127dp"
-        android:layout_marginBottom="546dp"
+        android:layout_marginBottom="12dp"
         android:text="Escolha uma imagem"
         android:textColor="@android:color/white"
         android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerImagens"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/editNome" />
 
     <!-- Lista horizontal de imagens -->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerImagens"
-        android:layout_width="321dp"
-        android:layout_height="333dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="44dp"
-        android:layout_marginTop="197dp"
         android:layout_marginEnd="44dp"
-        android:layout_marginBottom="201dp"
+        android:layout_marginBottom="21dp"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnSalvarPerfil"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <Button
         android:id="@+id/btnSalvarPerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="551dp"
         android:layout_marginBottom="132dp"
         android:backgroundTint="#84BF04"
         android:text="Salvar Perfil"
@@ -85,7 +77,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/recyclerImagens" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

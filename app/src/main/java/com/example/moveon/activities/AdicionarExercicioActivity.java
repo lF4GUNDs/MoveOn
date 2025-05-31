@@ -1,6 +1,5 @@
 package com.example.moveon.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,12 +8,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.moveon.R;
+import com.example.moveon.database.ExerciciosDBHelper;
 import com.example.moveon.models.Exercicio;
 
 public class AdicionarExercicioActivity extends AppCompatActivity {
 
     private EditText editNome, editSeries, editRepeticoes, editPeso;
     private Button btnSalvar;
+    private ExerciciosDBHelper dbHelper;
+    private int treinoId = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,12 @@ public class AdicionarExercicioActivity extends AppCompatActivity {
         editPeso = findViewById(R.id.editPeso);
         btnSalvar = findViewById(R.id.btnSalvar);
 
+        dbHelper = new ExerciciosDBHelper(this);
+
+        if (getIntent() != null && getIntent().hasExtra("treinoId")) {
+            treinoId = getIntent().getIntExtra("treinoId", -1);
+        }
+
         btnSalvar.setOnClickListener(v -> {
             String nome = editNome.getText().toString().trim();
             String seriesStr = editSeries.getText().toString().trim();
@@ -38,16 +46,24 @@ public class AdicionarExercicioActivity extends AppCompatActivity {
                 return;
             }
 
-            int series = Integer.parseInt(seriesStr);
-            int repeticoes = Integer.parseInt(repeticoesStr);
-            int peso = Integer.parseInt(pesoStr);
+            try {
+                int series = Integer.parseInt(seriesStr);
+                int repeticoes = Integer.parseInt(repeticoesStr);
+                float peso = Float.parseFloat(pesoStr);
 
-            Exercicio novoExercicio = new Exercicio(nome, series, repeticoes, peso);
+                Exercicio novoExercicio = new Exercicio(nome, series, peso, repeticoes);
+                long id = dbHelper.adicionarExercicio(novoExercicio, treinoId);
 
-            Intent resultIntent = new Intent();
-            resultIntent.putExtra("exercicio", novoExercicio);
-            setResult(RESULT_OK, resultIntent);
-            finish();
+                if (id != -1) {
+                    Toast.makeText(this, "Exercício adicionado com sucesso", Toast.LENGTH_SHORT).show();
+                    finish();
+                } else {
+                    Toast.makeText(this, "Erro ao adicionar exercício", Toast.LENGTH_SHORT).show();
+                }
+
+            } catch (NumberFormatException e) {
+                Toast.makeText(this, "Valores inválidos", Toast.LENGTH_SHORT).show();
+            }
         });
     }
 }

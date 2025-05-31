@@ -8,10 +8,6 @@
     android:background="#222426"
     android:padding="16dp">
 
-    <!-- Título -->
-
-    <!-- RecyclerView -->
-
     <!-- Botão flutuante para adicionar anotação -->
 
     <androidx.recyclerview.widget.RecyclerView
@@ -43,12 +39,12 @@
         android:id="@+id/btnNovaAnotacao"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="12dp"
         android:contentDescription="Adicionar Anotação"
         android:src="@drawable/ic_add"
         android:tint="@android:color/white"
         app:backgroundTint="#84BF04"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="12dp" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

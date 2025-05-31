@@ -2,10 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp">
+    android:padding="16dp"
+    android:background="#222426">
 
     <EditText
         android:id="@+id/editNome"
@@ -14,11 +14,11 @@
         android:hint="Nome do exercício"
         android:inputType="textPersonName"
         android:textColor="@android:color/white"
-        android:textColorHint="#CCCCCC"
+        android:textColorHint="#AAAAAA"
         android:backgroundTint="#84BF04"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
         android:id="@+id/editSeries"
@@ -27,12 +27,12 @@
         android:hint="Séries"
         android:inputType="number"
         android:textColor="@android:color/white"
-        android:textColorHint="#CCCCCC"
+        android:textColorHint="#AAAAAA"
         android:backgroundTint="#84BF04"
         app:layout_constraintTop_toBottomOf="@id/editNome"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"/>
 
     <EditText
         android:id="@+id/editRepeticoes"
@@ -41,39 +41,59 @@
         android:hint="Repetições"
         android:inputType="number"
         android:textColor="@android:color/white"
-        android:textColorHint="#CCCCCC"
+        android:textColorHint="#AAAAAA"
         android:backgroundTint="#84BF04"
         app:layout_constraintTop_toBottomOf="@id/editSeries"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"/>
 
     <EditText
         android:id="@+id/editPeso"
-        android:layout_width="116dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:backgroundTint="#84BF04"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:hint="Peso (kg)"
         android:inputType="numberDecimal"
         android:textColor="@android:color/white"
-        android:textColorHint="#CCCCCC"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.809"
+        android:textColorHint="#AAAAAA"
+        android:backgroundTint="#84BF04"
+        app:layout_constraintTop_toBottomOf="@id/editRepeticoes"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editRepeticoes" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="12dp"/>
+
+    <ImageView
+        android:id="@+id/imagemSelecionada"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_braco"
+        android:scaleType="fitCenter"
+        android:contentDescription="Imagem selecionada"
+        app:layout_constraintTop_toBottomOf="@id/editPeso"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerImagens"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintTop_toBottomOf="@id/imagemSelecionada"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
         android:id="@+id/btnSalvar"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Salvar"
-        android:textAllCaps="false"
+        android:textColor="@android:color/white"
         android:backgroundTint="#84BF04"
-        android:textColor="#FFFFFF"
-        app:layout_constraintTop_toBottomOf="@id/editPeso"
+        android:layout_marginTop="20dp"
+        app:layout_constraintTop_toBottomOf="@id/recyclerImagens"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="24dp" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

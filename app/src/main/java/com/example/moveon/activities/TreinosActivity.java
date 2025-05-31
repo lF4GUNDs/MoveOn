@@ -16,7 +16,6 @@ import com.example.moveon.R;
 import com.example.moveon.adapters.TreinoAdapter;
 import com.example.moveon.models.Exercicio;
 import com.example.moveon.models.Treino;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
@@ -119,7 +118,7 @@ public class TreinosActivity extends AppCompatActivity {
             String nome = data.getStringExtra("nome");
             int imagem = data.getIntExtra("imagem", R.drawable.ic_peito);
             Treino novoTreino = new Treino(nome, imagem);
-            novoTreino.setListaExercicios(new ArrayList<>()); // Começa vazio
+            novoTreino.setListaExercicios(new ArrayList<>());
             listaTreinos.add(novoTreino);
             treinoAdapter.notifyItemInserted(listaTreinos.size() - 1);
         }

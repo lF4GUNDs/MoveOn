@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.moveon.R;
@@ -16,6 +17,7 @@ public class ImagemAdapter extends RecyclerView.Adapter<ImagemAdapter.ImagemView
     private final Context context;
     private final int[] imagens;
     private final OnImagemClickListener listener;
+    private int imagemSelecionadaIndex = -1;
 
     public interface OnImagemClickListener {
         void onImagemClick(int resId);
@@ -36,8 +38,23 @@ public class ImagemAdapter extends RecyclerView.Adapter<ImagemAdapter.ImagemView
 
     @Override
     public void onBindViewHolder(@NonNull ImagemViewHolder holder, int position) {
-        holder.imagem.setImageResource(imagens[position]);
-        holder.itemView.setOnClickListener(v -> listener.onImagemClick(imagens[position]));
+        int resId = imagens[position];
+        holder.imgItem.setImageResource(resId);
+
+        // Aplica destaque se a imagem estiver selecionada
+        if (imagemSelecionadaIndex == position) {
+            holder.imgItem.setBackground(ContextCompat.getDrawable(context, R.drawable.borda_selecionado));
+        } else {
+            holder.imgItem.setBackground(ContextCompat.getDrawable(context, R.drawable.rounded_background));
+        }
+
+        holder.imgItem.setOnClickListener(v -> {
+            int posAnterior = imagemSelecionadaIndex;
+            imagemSelecionadaIndex = position;
+            notifyItemChanged(posAnterior);
+            notifyItemChanged(imagemSelecionadaIndex);
+            listener.onImagemClick(resId);
+        });
     }
 
     @Override
@@ -45,12 +62,12 @@ public class ImagemAdapter extends RecyclerView.Adapter<ImagemAdapter.ImagemView
         return imagens.length;
     }
 
-    static class ImagemViewHolder extends RecyclerView.ViewHolder {
-        ImageView imagem;
+    public static class ImagemViewHolder extends RecyclerView.ViewHolder {
+        ImageView imgItem;
 
         public ImagemViewHolder(@NonNull View itemView) {
             super(itemView);
-            imagem = itemView.findViewById(R.id.imgItem); // ID corrigido para bater com o layout
+            imgItem = itemView.findViewById(R.id.imgItem);
         }
     }
 }

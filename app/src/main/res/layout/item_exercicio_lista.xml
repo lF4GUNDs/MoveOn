@@ -9,29 +9,48 @@
     app:cardElevation="6dp"
     app:cardBackgroundColor="#2C2C2C">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:padding="16dp">
 
-        <TextView
-            android:id="@+id/tvNomeExercicio"
+        <LinearLayout
+            android:id="@+id/layoutTextos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nome do Exercício"
-            android:textColor="#FFFFFF"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:layout_alignParentStart="true"
+            android:layout_toStartOf="@id/btnExcluir"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/tvSeriesInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0/4 séries concluídas"
-            android:textColor="#84BF04"
-            android:textSize="14sp"
-            android:layout_marginTop="4dp" />
+            <TextView
+                android:id="@+id/tvNomeExercicio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nome do Exercício"
+                android:textColor="#FFFFFF"
+                android:textSize="18sp"
+                android:textStyle="bold" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tvSeriesInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0/4 séries concluídas"
+                android:textColor="#84BF04"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/btnExcluir"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Excluir exercício"
+            android:src="@android:drawable/ic_menu_delete"
+            android:tint="#FF5555" />
+    </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>

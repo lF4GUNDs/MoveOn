@@ -22,7 +22,8 @@ public class ExecutarExercicioActivity extends AppCompatActivity {
     private Button btnCompletarSerie;
 
     private int serieAtual = 1;
-    private int totalSeries, peso, reps, descansoSegundos = 60;
+    private int totalSeries, reps, descansoSegundos = 60;
+    private float peso; // O tipo float está correto aqui
     private String nomeExercicio;
     private int perfilId = 1; // Ajustar para perfil logado
 
@@ -41,7 +42,7 @@ public class ExecutarExercicioActivity extends AppCompatActivity {
         btnCompletarSerie = findViewById(R.id.btnCompletarSerie);
 
         // Recuperar exercício vindo da intent
-        Exercicio exercicio = getIntent().getParcelableExtra("exercicio");
+        Exercicio exercicio = (Exercicio) getIntent().getSerializableExtra("exercicio");
 
         if (exercicio != null) {
             nomeExercicio = exercicio.getNome();
@@ -49,10 +50,9 @@ public class ExecutarExercicioActivity extends AppCompatActivity {
             peso = exercicio.getPeso();
             reps = exercicio.getReps();
         } else {
-            // fallback padrão
             nomeExercicio = "Exercício Desconhecido";
             totalSeries = 4;
-            peso = 30;
+            peso = 30.0f;
             reps = 12;
         }
 
@@ -105,7 +105,7 @@ public class ExecutarExercicioActivity extends AppCompatActivity {
                 dataHoje,
                 nomeExercicio,
                 serieAtual,
-                peso,
+                (int) peso,
                 reps,
                 descansoSegundos
         );
