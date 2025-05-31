@@ -6,7 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.example.moveon.models.HistoricoTreino;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class ExecucaoExercicioDBHelper extends SQLiteOpenHelper {
 
@@ -46,19 +49,17 @@ public class ExecucaoExercicioDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Destroi a tabela anterior e recria (em produção, use ALTER TABLE com cautela)
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
 
-    // ✅ Novo método completo para salvar execução com perfil
     public long salvarExecucao(int perfilId, String dataHora, String nomeExercicio,
-                               int serieNumero, int pesoUsado, int repsFeitas, int descansoSegundos) {
+                               int serieNumero, int repsFeitas, float pesoUsado, int descansoSegundos) {
 
         SQLiteDatabase db = getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUMN_PERFIL_ID, perfilId);
-        values.put(COLUMN_EXERCICIO_ID, -1); // caso você não tenha o ID do exercício, pode definir -1
+        values.put(COLUMN_EXERCICIO_ID, -1);
         values.put(COLUMN_NOME_EXERCICIO, nomeExercicio);
         values.put(COLUMN_SERIE_NUMERO, serieNumero);
         values.put(COLUMN_REPS_FEITAS, repsFeitas);
@@ -69,7 +70,6 @@ public class ExecucaoExercicioDBHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_NAME, null, values);
     }
 
-    // ✅ Lista execuções para um exercício (por ID)
     public ArrayList<String> listarExecucoesPorExercicio(int exercicioId) {
         ArrayList<String> execucoes = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
@@ -94,5 +94,31 @@ public class ExecucaoExercicioDBHelper extends SQLiteOpenHelper {
         }
 
         return execucoes;
+    }
+
+    public List<HistoricoTreino> buscarHistoricoTreinos(int perfilId) {
+        List<HistoricoTreino> lista = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String query = "SELECT " + COLUMN_DATA_EXECUCAO + " as data, " +
+                COLUMN_NOME_EXERCICIO + " as nomeGrupoMuscular, " +
+                "SUM(" + COLUMN_DESCANSO + ") AS duracao " +
+                "FROM " + TABLE_NAME + " WHERE " + COLUMN_PERFIL_ID + " = ? " +
+                "GROUP BY data, nomeGrupoMuscular ORDER BY data DESC";
+
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(perfilId)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                String data = cursor.getString(cursor.getColumnIndexOrThrow("data"));
+                String nomeGrupo = cursor.getString(cursor.getColumnIndexOrThrow("nomeGrupoMuscular"));
+                int duracao = cursor.getInt(cursor.getColumnIndexOrThrow("duracao"));
+
+                lista.add(new HistoricoTreino(data, nomeGrupo, duracao));
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+
+        return lista;
     }
 }

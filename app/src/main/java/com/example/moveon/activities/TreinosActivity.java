@@ -78,8 +78,11 @@ public class TreinosActivity extends AppCompatActivity {
         btnAnotacoes.setOnClickListener(v -> startActivity(new Intent(this, AnotacoesActivity.class)));
 
         btnHistorico.setOnClickListener(v -> {
-            // TODO: Implementar tela de histórico
+            Intent intent = new Intent(this, HistoricoActivity.class);
+            intent.putExtra("perfilId", perfilId); // envia o perfil atual para a tela de histórico
+            startActivity(intent);
         });
+
 
         calendarView.setOnDateChangeListener((view, year, month, dayOfMonth) -> {
             // TODO: Implementar lógica de treinos por data
