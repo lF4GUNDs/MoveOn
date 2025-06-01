@@ -11,13 +11,47 @@
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_width="0dp"
-        android:layout_height="226dp"
-        android:layout_marginStart="58dp"
-        android:layout_marginTop="112dp"
-        android:layout_marginEnd="58dp"
+        android:layout_height="220dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btnLimparHistorico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:backgroundTint="#FF3B30"
+        android:elevation="4dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        android:text="Limpar Histórico"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:cornerRadius="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtResumoHistorico" />
+
+    <TextView
+        android:id="@+id/txtResumoHistorico"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:gravity="center"
+        android:text="Resumo"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/barChart" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

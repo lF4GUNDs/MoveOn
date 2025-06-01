@@ -55,6 +55,7 @@ public class ExecucaoExercicioDBHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    // Inserção de execução
     public long salvarExecucao(int perfilId, String dataHora, String nomeExercicio,
                                int serieNumero, int repsFeitas, float pesoUsado, int descansoSegundos) {
 
@@ -72,6 +73,7 @@ public class ExecucaoExercicioDBHelper extends SQLiteOpenHelper {
         return db.insert(TABLE_NAME, null, values);
     }
 
+    // Lista execuções por exercício
     public ArrayList<String> listarExecucoesPorExercicio(int exercicioId) {
         ArrayList<String> execucoes = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
@@ -98,12 +100,13 @@ public class ExecucaoExercicioDBHelper extends SQLiteOpenHelper {
         return execucoes;
     }
 
+    // Histórico geral
     public List<HistoricoTreino> buscarHistoricoTreinos(int perfilId) {
         List<HistoricoTreino> lista = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
 
-        String query = "SELECT " + COLUMN_DATA_EXECUCAO + " as data, " +
-                COLUMN_NOME_EXERCICIO + " as nomeGrupoMuscular, " +
+        String query = "SELECT " + COLUMN_DATA_EXECUCAO + " AS data, " +
+                COLUMN_NOME_EXERCICIO + " AS nomeGrupoMuscular, " +
                 "SUM(" + COLUMN_DESCANSO + ") AS duracao " +
                 "FROM " + TABLE_NAME + " WHERE " + COLUMN_PERFIL_ID + " = ? " +
                 "GROUP BY data, nomeGrupoMuscular ORDER BY data DESC";
@@ -124,7 +127,7 @@ public class ExecucaoExercicioDBHelper extends SQLiteOpenHelper {
         return lista;
     }
 
-    // ✅ Novo método para gráfico de barras: séries por grupo muscular
+    // Gráfico: séries por grupo muscular
     public Map<String, Integer> getSeriesPorGrupoMuscular(int perfilId) {
         Map<String, Integer> mapa = new HashMap<>();
         SQLiteDatabase db = getReadableDatabase();
@@ -162,4 +165,62 @@ public class ExecucaoExercicioDBHelper extends SQLiteOpenHelper {
 
         return mapa;
     }
+
+    // ✅ Total de sessões (dias diferentes)
+    public int getTotalSessoes(int perfilId) {
+        SQLiteDatabase db = getReadableDatabase();
+        int total = 0;
+
+        String query = "SELECT COUNT(DISTINCT " + COLUMN_DATA_EXECUCAO + ") AS total FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_PERFIL_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(perfilId)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            total = cursor.getInt(cursor.getColumnIndexOrThrow("total"));
+            cursor.close();
+        }
+
+        return total;
+    }
+
+    // ✅ Duração total (soma dos descansos)
+    public int getDuracaoTotalEmSegundos(int perfilId) {
+        SQLiteDatabase db = getReadableDatabase();
+        int total = 0;
+
+        String query = "SELECT SUM(" + COLUMN_DESCANSO + ") AS total FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_PERFIL_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(perfilId)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            total = cursor.getInt(cursor.getColumnIndexOrThrow("total"));
+            cursor.close();
+        }
+
+        return total;
+    }
+
+    // ✅ Total de séries
+    public int getTotalSeries(int perfilId) {
+        SQLiteDatabase db = getReadableDatabase();
+        int total = 0;
+
+        String query = "SELECT SUM(" + COLUMN_SERIE_NUMERO + ") AS total FROM " + TABLE_NAME +
+                " WHERE " + COLUMN_PERFIL_ID + " = ?";
+        Cursor cursor = db.rawQuery(query, new String[]{String.valueOf(perfilId)});
+
+        if (cursor != null && cursor.moveToFirst()) {
+            total = cursor.getInt(cursor.getColumnIndexOrThrow("total"));
+            cursor.close();
+        }
+
+        return total;
+    }
+
+    // ✅ Apaga todas as execuções de um perfil
+    public void limparHistoricoPorPerfil(int perfilId) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.delete(TABLE_NAME, COLUMN_PERFIL_ID + " = ?", new String[]{String.valueOf(perfilId)});
+    }
+
 }

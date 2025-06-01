@@ -37,6 +37,13 @@ public class CadastroPerfilActivity extends AppCompatActivity {
                 R.drawable.ic_perfil1,
                 R.drawable.ic_perfil2,
                 R.drawable.ic_perfil3,
+                R.drawable.ic_perfil4,
+                R.drawable.ic_perfil5,
+                R.drawable.ic_perfil6,
+                R.drawable.ic_perfil7,
+
+
+
         };
 
         ImagemAdapter adapter = new ImagemAdapter(this, imagens, imagemId -> imagemSelecionada = imagemId);
