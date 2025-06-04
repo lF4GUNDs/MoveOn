@@ -13,16 +13,15 @@
         android:id="@+id/imgPerfilTopo"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="13dp"
-        android:layout_marginEnd="347dp"
-        android:layout_marginBottom="670dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="4dp"
         android:background="@drawable/rounded_background"
         android:padding="4dp"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_user"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/calendarView"
+        app:layout_constraintEnd_toStartOf="@+id/txtNomePerfil"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
     <!-- Nome do usuário -->
@@ -30,45 +29,40 @@
         android:id="@+id/txtNomePerfil"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="244dp"
-        android:layout_marginBottom="683dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="248dp"
         android:text="Olá, Usuário"
         android:textColor="@color/white"
         android:textSize="18sp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imgPerfilTopo"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/imgPerfilTopo" />
 
 
     <ImageButton
         android:id="@+id/imageButton_Historico2"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:layout_marginStart="206dp"
-        android:layout_marginTop="507dp"
         android:layout_marginEnd="45dp"
         android:layout_marginBottom="64dp"
         android:background="@drawable/ic_historico"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/imageButton_Historico"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerTreinos" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerTreinos"
-        android:layout_width="411dp"
-        android:layout_height="230dp"
-        android:layout_marginTop="261dp"
-        android:layout_marginBottom="240dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:clipToPadding="false"
         android:orientation="horizontal"
         android:padding="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton_Historico2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/calendarView"
         tools:listitem="@layout/item_treino">
 
     </androidx.recyclerview.widget.RecyclerView>
@@ -78,26 +72,22 @@
         android:layout_width="160dp"
         android:layout_height="160dp"
         android:layout_marginStart="46dp"
-        android:layout_marginTop="507dp"
-        android:layout_marginEnd="205dp"
-        android:layout_marginBottom="64dp"
         android:background="@drawable/ic_anotacao"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/imageButton_Historico2"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton_Historico2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/imageButton_Historico2" />
 
     <CalendarView
         android:id="@+id/calendarView"
-        android:layout_width="409dp"
-        android:layout_height="186dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginBottom="477dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:focusedMonthDateColor="#6D2222"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerTreinos"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imgPerfilTopo" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

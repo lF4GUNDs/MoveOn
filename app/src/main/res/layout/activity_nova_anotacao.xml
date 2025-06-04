@@ -19,7 +19,6 @@
         android:id="@+id/editConteudo"
         android:layout_width="321dp"
         android:layout_height="0dp"
-        android:layout_marginEnd="22dp"
         android:layout_marginBottom="17dp"
         android:backgroundTint="#84BF04"
         android:gravity="top"
@@ -32,6 +31,7 @@
         android:textColorHint="#AAAAAA"
         app:layout_constraintBottom_toTopOf="@+id/btnSalvar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTitulo" />
 
     <EditText
@@ -39,7 +39,6 @@
         android:layout_width="320dp"
         android:layout_height="71dp"
         android:layout_marginTop="118dp"
-        android:layout_marginEnd="25dp"
         android:layout_marginBottom="44dp"
         android:backgroundTint="#84BF04"
         android:hint="Título"
@@ -48,6 +47,7 @@
         android:textColorHint="#AAAAAA"
         app:layout_constraintBottom_toTopOf="@+id/editConteudo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
