@@ -26,12 +26,6 @@
 
 ---
 
-## 📸 Capturas de Tela
-
-> *(Adicione aqui prints reais do app rodando: tela de treinos, perfil, calendário, execução de treino, etc.)*
-
----
-
 ## 🏗️ Estrutura do Projeto
 
 ```plaintext
